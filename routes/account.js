@@ -1,7 +1,8 @@
-const express = require('express')
-const AccountController = require('../controllers/account.controller')
+const express = require('express');
+const { login, register } = require('../controllers/account.controller');
 const AccountRouter = express.Router()
 
-AccountRouter.post('/register', AccountController.register)
+AccountRouter.post('/register', register);
+AccountRouter.post('/login', login)
 
 module.exports = AccountRouter

@@ -16,7 +16,9 @@ const register = (req, res)=>{
                     if (err) {
                         throw err
                     } else {
-                        res.json({msg: 'Success'})
+                        console.log(result)
+                        user.id = result.insertId
+                        res.json({msg: 'Success', data: user})
                     }
                 })
             }else{
@@ -25,6 +27,21 @@ const register = (req, res)=>{
         }
     })
 }
+const login =(req, res)=>{
+    let loginInfo = req.body
+    let sql = `SELECT * FROM users WHERE (email = '${loginInfo.email}' AND password = '${loginInfo.password}')`
+    pool.query(sql, (err, result)=>{
+        if (err) {
+            throw err
+        } else {
+            if (result.length == 0) {
+                res.status(200).send({msg: 'Login Failed!'})
+            } else {
+                res.status(200).send({msg: 'Success', data: result[0]})
+            }                        
+        }
+    })
+}
 
-let AccountController = { register }
+let AccountController = { register, login }
 module.exports = AccountController

@@ -19,5 +19,5 @@ pool.getConnection((err, conn)=>{
         console.log('Connection Error', err)
     }
 })
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World! Welcome to the Ballot Management Server'))
 app.listen(port, () => console.log(`Ballot Server listening on port ${port}`))

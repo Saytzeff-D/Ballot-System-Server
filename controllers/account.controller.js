@@ -1,22 +1,18 @@
-const uuid = require('uuid');
 const pool = require('../connections/pool');
 
 const register = (req, res)=>{
     let user = req.body
-    user.ballotKey = uuid.v4()
-    // res.json(user)
     let sql = `SELECT * FROM users WHERE email = '${req.body.email}'`
     pool.query(sql, (err, result)=>{
         if(err){
             throw err
         }else{
             if(result.length == 0){
-                let insertQuery = `INSERT INTO users (fullName, email, password, orgName, ballotKey) VALUES ('${user.fullName}', '${user.email}', '${user.password}', '${user.orgName}', '${user.ballotKey}')`;
+                let insertQuery = `INSERT INTO users (fullName, email, password, orgName) VALUES ('${user.fullName}', '${user.email}', '${user.password}', '${user.orgName}')`;
                 pool.query(insertQuery, (err, result)=>{
                     if (err) {
                         throw err
                     } else {
-                        console.log(result)
                         user.id = result.insertId
                         res.json({msg: 'Success', data: user})
                     }

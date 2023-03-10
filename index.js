@@ -6,11 +6,13 @@ const port = process.env.PORT
 const bodyParser = require("body-parser");
 const AccountRouter = require('./routes/account');
 const pool = require('./connections/pool');
+const ElectionRouter = require('./routes/election');
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(cors({origin: '*'}))
 app.use('/account', AccountRouter)
+app.use('/election', ElectionRouter)
 
 pool.getConnection((err, conn)=>{
     if(!err){
